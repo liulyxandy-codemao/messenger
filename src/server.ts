@@ -47,3 +47,5 @@ class MessengerServer {
         this.events[name] = callback
     }
 }
+
+export default MessengerServer

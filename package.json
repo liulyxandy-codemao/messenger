@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/lc-cn/ts-dev-template#readme",
   "devDependencies": {
+    "@types/nedb": "^1.8.15",
     "@types/node": "latest",
     "dtsc": "^2.2.3",
     "ts-node-dev": "latest",
