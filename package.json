@@ -40,5 +40,8 @@
     "/lib/**/*.d.ts",
     "/lib/**/LICENSE"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "nedb": "^1.8.0",
+    "ws": "^8.14.2"
+  }
 }
