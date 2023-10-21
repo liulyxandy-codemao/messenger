@@ -1,26 +1,26 @@
 import { WebSocketServer } from "ws";
 
 interface EventMap{
-    '__internal_connected': ({})=>void,
-    '__internal_disconnected': ({})=>void,
+    '__internal_connected': ()=>void,
+    '__internal_disconnected': ()=>void,
     '__internal_error': (message: string, name: string, stack?: string)=>void
 
-    'create_message': ({})=>void,
-    'delete_message': ({})=>void,
+    'create_message': ()=>void,
+    'delete_message': ()=>void,
 
-    'create_group': ({})=>void,
-    'delete_group': ({})=>void,
-    'leave_group': ({})=>void,
+    'create_group': ()=>void,
+    'delete_group': ()=>void,
+    'leave_group': ()=>void,
 
-    'add_friend': ({})=>void,
-    'del_friend': ({})=>void,
-    'accept_friend': ({})=>void,
-    'refuse_friend': ({})=>void
+    'add_friend': ()=>void,
+    'del_friend': ()=>void,
+    'accept_friend': ()=>void,
+    'refuse_friend': ()=>void
 }
 
 class MessengerServer {
     private wsServer: WebSocketServer
-    private events: {[key in keyof EventMap]:(...args: any)=>void}
+    private events: {[key in keyof EventMap]:(...args: Parameters<EventMap[key]>)=>void}
     constructor() {
         this.wsServer = new WebSocketServer({ port: 11451 })
         this.wsServer.on('connection', (conn) => {
@@ -32,7 +32,7 @@ class MessengerServer {
                     data: Object
                 } = JSON.parse(str_message)
                 if(Object.keys(this.events).includes(msg.name)){
-                    this.events[msg.name](...[this.wsServer,...Object.values(msg.data)])
+                    this.events[msg.name].apply(null,[this.wsServer,...Object.values(msg.data)])
                 }
             })
         })
