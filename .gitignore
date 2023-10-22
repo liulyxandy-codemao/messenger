@@ -1,3 +1,6 @@
 node_modules
 package-lock.json
 chat.db
+user.db
+group.db
+log.db
