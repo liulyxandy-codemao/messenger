@@ -41,7 +41,7 @@ export interface MessageElement {
     type: 'text' | 'image' | 'audio' | 'video' | 'file' | 'history',
     content?: string, //type=text
     file_url?: string //type=image|audio|video|file
-    history: History //type=history
+    history?: History //type=history
 }
 
 export interface Message {
