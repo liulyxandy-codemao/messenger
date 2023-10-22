@@ -1,11 +1,12 @@
 import { WebSocketServer, WebSocket } from "ws";
+import { Message } from "./types";
 
 interface EventMap {
     '__internal_connected': () => void,
     '__internal_disconnected': () => void,
     '__internal_error': (message: string, name: string, stack?: string) => void
 
-    'create_message': (server: WebSocket, message: string) => void,
+    'create_message': (server: WebSocket, message: Message) => void,
     'delete_message': () => void,
 
     'create_group': () => void,
@@ -25,7 +26,7 @@ class MessengerServer {
         this.events = {
             '__internal_connected': () => { },
             '__internal_disconnected': () => { },
-            '__internal_error': (message: string, name: string, stack?: string) => { },
+            '__internal_error': () => { },
             'create_message': () => { },
             'delete_message': () => { },
             'create_group': () => { },
@@ -47,7 +48,7 @@ class MessengerServer {
                     data: Object
                 } = JSON.parse(str_message)
                 if (Object.keys(this.events).includes(msg.name)) {
-                    this.events[msg.name].apply(null, [conn, ...Object.values(msg.data)])
+                    this.events[msg.name].apply(null, [conn, msg.data])
                 }
             })
         })

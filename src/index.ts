@@ -32,4 +32,10 @@ server.on('__internal_connected',()=>{
     })
 })
 
-server.on('create_message',(server: WebSocket,message:string)=>{ })
+server.on('create_message',(server: WebSocket,message: Message)=>{
+    ChatDB.insert(message,function(err,doc){
+        server.send(JSON.stringify({
+            staus: 200
+        }))
+    })
+})
